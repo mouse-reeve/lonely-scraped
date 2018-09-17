@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
 
-
 class LonelyplanetSpider(scrapy.Spider):
     ''' scrape text descriptions from travel pages '''
 
@@ -57,6 +56,7 @@ class LonelyplanetSpider(scrapy.Spider):
         yield {
             'name': name.get(),
             'review': review,
-            'city': placename.get(),
+            'location': placename.get(),
+            'url': response.url,
         }
 

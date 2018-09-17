@@ -45,18 +45,18 @@ class LonelyplanetSpider(scrapy.Spider):
     def parse_restaurant(self, response):
         ''' finally, we have a restauarant review '''
         name = response.xpath(
-            '//h1[@class="styles__heading___mD4_3"]/text()')
+            '//h1[@class="styles__heading___mD4_3"]/text()').get()
         review_pieces = response.xpath(
             '//div[@class="styles__textArticle___OqHJQ ' \
-
             'styles__reviewBodyText___2rexg"]//*/text()')
         review = ' '.join(l.get() for l in review_pieces)
         placename = response.xpath(
-            '//a[@itemtype="http://schema.org/Place"]//span/text()')[-1]
+            '//a[@itemtype="http://schema.org/Place"]//span/text()')
+        placename = ', '.join(p.get() for p in placename)
         yield {
-            'name': name.get(),
+            'name': name,
             'review': review,
-            'location': placename.get(),
+            'location': placename,
             'url': response.url,
         }
 
